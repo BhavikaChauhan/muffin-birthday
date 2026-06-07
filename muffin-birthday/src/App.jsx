@@ -56,7 +56,7 @@ Someone who sees all of you and stays 🌙`
   }
 };
 
-const HIDDEN_PASSWORD = "REPLACE_WITH_INSIDE_JOKE";
+const HIDDEN_PASSWORD = "0906";
 const HER_NAME = "Muffin";
 
 const GEM_COLORS = [
@@ -248,31 +248,42 @@ function LetterPage({ letter }) {
 }
 
 function MemoriesPage() {
-  const memories = [
-    "Memory 1 — replace with your chaotic story 🤭",
-    "Memory 2 — replace with your chaotic story 😭",
-    "Memory 3 — replace with your chaotic story 😂",
-    "Memory 4 — replace with your chaotic story 🫶",
-    "Memory 5 — replace with your chaotic story ✨",
+  const appreciations = [
+    { emoji: "🐱", title: "Cute & Sassy", desc: "You walk into a room and own it without even trying. That perfect mix of cute and boss energy? Nobody does it like you." },
+    { emoji: "👑", title: "Total Girlboss", desc: "Bossy in the best way. You know what you want, you go after it, and you make it look effortless. Iconic behaviour honestly." },
+    { emoji: "🎨", title: "Artist Soul", desc: "The way you draw anime, the way you see beauty in things — you have an artist's eye and it makes everything you touch feel special." },
+    { emoji: "🥂", title: "Royal Taste", desc: "Chandeliers, gold interiors, champagne energy — you were built for the finer things and honestly the finer things were built for you." },
+    { emoji: "🐻", title: "Soft at Heart", desc: "Behind all that sassy girlboss energy is someone who loves teddy bears and cuddles and that softness is your most beautiful side." },
+    { emoji: "✨", title: "Lucky Girl Energy", desc: "You carry this quiet confidence that makes the universe want to work in your favour. Lucky Girl Syndrome? No — you just deserve it all." },
+    { emoji: "🖤", title: "Drip & Vibe", desc: "Your taste in music, fashion, everything — it's so distinctly YOU. From Babymonster to Jennie, even your playlist has main character energy." },
+    { emoji: "💛", title: "My Favourite Person", desc: "Of all the people in this world, you are my most favourite chaos. Happy 18th Muffin — the world got luckier the day you arrived in it." },
   ];
   return (
     <div style={{ maxWidth: "680px", margin: "0 auto", padding: "2rem 1.5rem", animation: "floatUp 0.6s ease-out forwards" }}>
-      <h2 style={{ fontFamily: "'Playfair Display', serif", textAlign: "center", marginBottom: "2rem", fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>
-        <GlitterText>Us, Always 🥹</GlitterText>
+      <h2 style={{ fontFamily: "'Playfair Display', serif", textAlign: "center", marginBottom: "0.5rem", fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>
+        <GlitterText>Everything You Are 💛</GlitterText>
       </h2>
-      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-        {memories.map((m, i) => (
+      <p style={{ textAlign: "center", fontFamily: "'Lora', serif", color: "#c4a8d4", fontSize: "0.9rem", marginBottom: "2rem", fontStyle: "italic" }}>
+        a love letter in pieces — just for you 🌙
+      </p>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+        {appreciations.map((a, i) => (
           <div key={i} style={{
             background: "rgba(255,255,255,0.04)",
-            border: "1px solid rgba(249,168,212,0.25)",
-            borderRadius: "16px",
-            padding: "1.5rem",
+            border: "1px solid rgba(249,168,212,0.2)",
+            borderRadius: "20px",
+            padding: "1.5rem 1.2rem",
             backdropFilter: "blur(10px)",
-            animation: `floatUp 0.5s ease-out ${i * 0.1}s forwards`,
+            animation: `floatUp 0.5s ease-out ${i * 0.08}s forwards`,
             opacity: 0,
-          }}>
-            <span style={{ fontSize: "1.3rem", marginRight: "0.5rem" }}>💎</span>
-            <span style={{ fontFamily: "'Lora', serif", color: "#f0e6ff", fontSize: "0.95rem", lineHeight: 1.7 }}>{m}</span>
+            transition: "all 0.3s",
+          }}
+            onMouseEnter={e => { e.currentTarget.style.border = "1px solid rgba(252,211,77,0.4)"; e.currentTarget.style.background = "rgba(252,211,77,0.06)"; }}
+            onMouseLeave={e => { e.currentTarget.style.border = "1px solid rgba(249,168,212,0.2)"; e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
+          >
+            <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>{a.emoji}</div>
+            <div style={{ fontFamily: "'Playfair Display', serif", color: "#fcd34d", fontWeight: 700, marginBottom: "0.4rem", fontSize: "0.95rem" }}>{a.title}</div>
+            <div style={{ fontFamily: "'Lora', serif", color: "#e2c4f0", fontSize: "0.82rem", lineHeight: 1.7 }}>{a.desc}</div>
           </div>
         ))}
       </div>
@@ -338,9 +349,40 @@ function HiddenPage() {
         </>
       ) : (
         <div style={{ animation: "floatUp 0.5s ease-out forwards" }}>
-          <p style={{ fontFamily: "'Lora', serif", color: "#f0e6ff", lineHeight: 1.8, fontSize: "1.05rem" }}>
-            ✨ Add your secret message here for her — an inside joke, a memory, something only she'd understand. This is your hidden room. Make it count. 🤭💛
-          </p>
+          <div style={{
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(192,132,252,0.3)",
+            borderRadius: "20px",
+            padding: "2rem",
+            marginBottom: "1rem",
+          }}>
+            <div style={{ fontSize: "2rem", marginBottom: "1rem" }}>🤍</div>
+            <h3 style={{ fontFamily: "'Playfair Display', serif", color: "#fcd34d", marginBottom: "1rem", fontSize: "1.2rem" }}>Big Sis Advice — Keep This Forever</h3>
+            <p style={{ fontFamily: "'Lora', serif", color: "#f0e6ff", lineHeight: 1.9, fontSize: "0.95rem" }}>
+              You don't have to be strong all the time. The people who love you — they want to hold you too, not just be held by you. Let yourself be warm. Let yourself lean. Not every hard thing needs to be carried alone in silence.
+            </p>
+            <p style={{ fontFamily: "'Lora', serif", color: "#f0e6ff", lineHeight: 1.9, fontSize: "0.95rem", marginTop: "1rem" }}>
+              You are allowed to need people. You are allowed to say "I'm not okay today." That's not weakness — that's trust. And the right people will always show up for it.
+            </p>
+            <p style={{ fontFamily: "'Lora', serif", color: "#e2c4f0", lineHeight: 1.9, fontSize: "0.95rem", marginTop: "1rem", fontStyle: "italic" }}>
+              Be someone's safe place, yes — but let someone be yours too. Starting with me. Always me. 💛
+            </p>
+          </div>
+          <div style={{
+            background: "rgba(252,211,77,0.06)",
+            border: "1px solid rgba(252,211,77,0.3)",
+            borderRadius: "20px",
+            padding: "1.5rem",
+          }}>
+            <div style={{ fontSize: "2rem", marginBottom: "0.8rem" }}>🕵️‍♀️</div>
+            <h3 style={{ fontFamily: "'Playfair Display', serif", color: "#fcd34d", marginBottom: "0.8rem", fontSize: "1.1rem" }}>Classified Intel 🤭</h3>
+            <p style={{ fontFamily: "'Lora', serif", color: "#f0e6ff", lineHeight: 1.9, fontSize: "0.95rem" }}>
+              Also — totally unrelated — your big sis has officially launched Operation: Find Muffin A Good Man. 
+            </p>
+            <p style={{ fontFamily: "'Lora', serif", color: "#e2c4f0", lineHeight: 1.9, fontSize: "0.9rem", marginTop: "0.5rem", fontStyle: "italic" }}>
+              Requirements: must survive my interrogation, must match your royal energy, must be worthy of you. Screening is ongoing. Updates to follow. You're welcome. 😂👑
+            </p>
+          </div>
         </div>
       )}
     </div>
@@ -349,46 +391,51 @@ function HiddenPage() {
 
 function MusicPlayer() {
   const songs = [
-    { title: "Flower — Jisoo", artist: "BLACKPINK", emoji: "🌸" },
-    { title: "SPOT! — Zico ft. Jennie", artist: "BLACKPINK", emoji: "💎" },
-    { title: "Alcohol-Free — TWICE", artist: "TWICE", emoji: "🍋" },
-    { title: "Batter Up — BABYMONSTER", artist: "BABYMONSTER", emoji: "🖤" },
+    { title: "It's Me", artist: "ILLIT", emoji: "💎", url: "https://youtu.be/bMhDJ0S0OBA" },
+    { title: "Like JENNIE", artist: "JENNIE", emoji: "👑", url: "https://youtu.be/XD00TJ-6WSw" },
+    { title: "Birthday", artist: "Jeon Somi", emoji: "🎂", url: "https://youtu.be/oDJ4ct59NC4" },
+    { title: "Lucky Girl Syndrome", artist: "ILLIT", emoji: "🍀", url: "https://youtu.be/UCmgGZbfjmk" },
   ];
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(null);
 
   return (
     <div style={{ maxWidth: "500px", margin: "0 auto", padding: "2rem 1.5rem", animation: "floatUp 0.6s ease-out forwards" }}>
-      <h2 style={{ fontFamily: "'Playfair Display', serif", textAlign: "center", marginBottom: "2rem", fontSize: "1.8rem" }}>
+      <h2 style={{ fontFamily: "'Playfair Display', serif", textAlign: "center", marginBottom: "0.5rem", fontSize: "1.8rem" }}>
         <GlitterText>Your Vibe 🎵</GlitterText>
       </h2>
+      <p style={{ textAlign: "center", fontFamily: "'Lora', serif", color: "#c4a8d4", fontSize: "0.85rem", marginBottom: "1.5rem", fontStyle: "italic" }}>
+        your personality in a playlist 👑✨
+      </p>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
         {songs.map((s, i) => (
-          <div key={i} onClick={() => setCurrent(i)} style={{
-            background: current === i ? "rgba(252,211,77,0.12)" : "rgba(255,255,255,0.04)",
-            border: `1px solid ${current === i ? "rgba(252,211,77,0.5)" : "rgba(255,255,255,0.1)"}`,
-            borderRadius: "16px", padding: "1.2rem 1.5rem",
-            cursor: "pointer", display: "flex", alignItems: "center", gap: "1rem",
-            transition: "all 0.3s",
-            boxShadow: current === i ? "0 0 20px rgba(252,211,77,0.2)" : "none",
-          }}>
-            <span style={{ fontSize: "1.8rem" }}>{s.emoji}</span>
-            <div>
-              <div style={{ fontFamily: "'Playfair Display', serif", color: current === i ? "#fcd34d" : "#f0e6ff", fontWeight: 600 }}>{s.title}</div>
-              <div style={{ fontFamily: "'Lora', serif", color: "#c4a8d4", fontSize: "0.8rem" }}>{s.artist}</div>
+          <a key={i} href={s.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+            <div onMouseEnter={() => setCurrent(i)} onMouseLeave={() => setCurrent(null)} style={{
+              background: current === i ? "rgba(252,211,77,0.12)" : "rgba(255,255,255,0.04)",
+              border: `1px solid ${current === i ? "rgba(252,211,77,0.5)" : "rgba(255,255,255,0.1)"}`,
+              borderRadius: "16px", padding: "1.2rem 1.5rem",
+              cursor: "pointer", display: "flex", alignItems: "center", gap: "1rem",
+              transition: "all 0.3s",
+              boxShadow: current === i ? "0 0 20px rgba(252,211,77,0.2)" : "none",
+            }}>
+              <span style={{ fontSize: "1.8rem" }}>{s.emoji}</span>
+              <div>
+                <div style={{ fontFamily: "'Playfair Display', serif", color: current === i ? "#fcd34d" : "#f0e6ff", fontWeight: 600 }}>{s.title}</div>
+                <div style={{ fontFamily: "'Lora', serif", color: "#c4a8d4", fontSize: "0.8rem" }}>{s.artist}</div>
+              </div>
+              <div style={{ marginLeft: "auto", fontSize: "1.2rem" }}>▶️</div>
             </div>
-            {current === i && <div style={{ marginLeft: "auto", fontSize: "1.2rem", animation: "bounce 1s ease-in-out infinite" }}>▶️</div>}
-          </div>
+          </a>
         ))}
       </div>
       <p style={{ textAlign: "center", fontFamily: "'Lora', serif", color: "#c4a8d4", fontSize: "0.85rem", marginTop: "1.5rem", fontStyle: "italic" }}>
-        Play these and think of all our chaos 💛
+        tap any song to play on YouTube 🎵
       </p>
     </div>
   );
 }
 
 const PAGES = ["home", "letter1", "letter2", "memories", "music", "secret"];
-const PAGE_LABELS = ["🏠", "💌 Letter", "🌙 For You", "🥹 Us", "🎵 Music", "🔮 Secret"];
+const PAGE_LABELS = ["🏠", "💌 Letter", "🌙 For You", "💛 You", "🎵 Music", "🔮 Secret"];
 
 export default function App() {
   const [entered, setEntered] = useState(false);
@@ -498,7 +545,7 @@ export default function App() {
                   {[
                     { page: "letter1", label: "Letter from Chubs", emoji: "💌", color: "#f9a8d4" },
                     { page: "letter2", label: "A Love Letter", emoji: "🌙", color: "#c084fc" },
-                    { page: "memories", label: "Our Memories", emoji: "🥹", color: "#67e8f9" },
+                    { page: "memories", label: "Everything You Are", emoji: "💛", color: "#67e8f9" },
                     { page: "music", label: "Your Vibe", emoji: "🎵", color: "#fcd34d" },
                   ].map(item => (
                     <button key={item.page} onClick={() => setPage(item.page)} style={{
