@@ -1,5 +1,134 @@
 import { useState, useEffect, useRef } from "react";
 
+const SUPABASE_URL = "https://grnlrvzzhtencxmlidcb.supabase.co";
+const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdybmxydnp6aHRlbmN4bWxpZGNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4MzQ1NzgsImV4cCI6MjA5NjQxMDU3OH0.7Ov7kNDIQHNqCluXHa5oeSOxOeZuLUO-tIyv-2dvYcw";
+
+async function dbGet(table) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?order=created_at.asc`, {
+    headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` }
+  });
+  return res.json();
+}
+
+async function dbInsert(table, data) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+    method: "POST",
+    headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}`, "Content-Type": "application/json", Prefer: "return=representation" },
+    body: JSON.stringify(data)
+  });
+  return res.json();
+}
+
+function WishingWall() {
+  const [wishes, setWishes] = useState([]);
+  const [name, setName] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+
+  useEffect(() => {
+    dbGet("wishes").then(data => {
+      setWishes(Array.isArray(data) ? data : []);
+      setLoading(false);
+    });
+  }, []);
+
+  const sendWish = async () => {
+    if (!name.trim() || !message.trim()) return;
+    setSending(true);
+    await dbInsert("wishes", { name: name.trim(), message: message.trim() });
+    const updated = await dbGet("wishes");
+    setWishes(Array.isArray(updated) ? updated : []);
+    setName("");
+    setMessage("");
+    setSending(false);
+    setSent(true);
+    setTimeout(() => setSent(false), 3000);
+  };
+
+  const inputStyle = {
+    background: "rgba(255,255,255,0.06)",
+    border: "1px solid rgba(192,132,252,0.3)",
+    borderRadius: "12px",
+    padding: "0.9rem 1.2rem",
+    fontSize: "0.95rem",
+    color: "#f0e6ff",
+    fontFamily: "'Lora', serif",
+    width: "100%",
+    outline: "none",
+    boxSizing: "border-box",
+    marginBottom: "0.8rem",
+  };
+
+  return (
+    <div style={{ maxWidth: "620px", margin: "0 auto", padding: "2rem 1.5rem", animation: "floatUp 0.6s ease-out forwards" }}>
+      <h2 style={{ fontFamily: "'Playfair Display', serif", textAlign: "center", marginBottom: "0.5rem", fontSize: "clamp(1.5rem, 4vw, 2rem)" }}>
+        <GlitterText>Wish Muffin 💌</GlitterText>
+      </h2>
+      <p style={{ textAlign: "center", fontFamily: "'Lora', serif", color: "#c4a8d4", fontSize: "0.88rem", marginBottom: "2rem", fontStyle: "italic" }}>
+        leave her a birthday message — she'll read every single one 🥹
+      </p>
+      <div style={{
+        background: "rgba(255,255,255,0.04)", border: "1px solid rgba(192,132,252,0.2)",
+        borderRadius: "20px", padding: "1.5rem", marginBottom: "2rem",
+        backdropFilter: "blur(10px)",
+      }}>
+        <input
+          value={name} onChange={e => setName(e.target.value)}
+          placeholder="Your name ✨"
+          style={inputStyle}
+        />
+        <textarea
+          value={message} onChange={e => setMessage(e.target.value)}
+          placeholder="Write your birthday wish for Muffin 💛"
+          rows={3}
+          style={{ ...inputStyle, resize: "none", marginBottom: "1rem" }}
+        />
+        {sent ? (
+          <div style={{ textAlign: "center", fontFamily: "'Playfair Display', serif", color: "#fcd34d", fontSize: "1rem" }}>
+            ✨ Wish sent! She'll love it 🥹
+          </div>
+        ) : (
+          <button onClick={sendWish} disabled={sending || !name.trim() || !message.trim()} style={{
+            background: sending ? "rgba(192,132,252,0.3)" : "linear-gradient(135deg, #fcd34d, #f9a8d4, #c084fc)",
+            border: "none", borderRadius: "50px", padding: "0.9rem 2rem",
+            fontSize: "0.95rem", fontFamily: "'Playfair Display', serif", fontWeight: 700,
+            color: "#1a0a2e", cursor: sending ? "not-allowed" : "pointer",
+            width: "100%", transition: "all 0.3s",
+            boxShadow: "0 0 20px rgba(192,132,252,0.3)",
+          }}>
+            {sending ? "Sending... 💫" : "Send Wish 💌"}
+          </button>
+        )}
+      </div>
+      {loading ? (
+        <div style={{ textAlign: "center", color: "#c4a8d4", fontFamily: "'Lora', serif", fontStyle: "italic" }}>Loading wishes... ✨</div>
+      ) : wishes.length === 0 ? (
+        <div style={{ textAlign: "center", color: "#c4a8d4", fontFamily: "'Lora', serif", fontStyle: "italic" }}>Be the first to wish Muffin! 💛</div>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+          {wishes.map((w, i) => (
+            <div key={w.id} style={{
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(249,168,212,0.2)",
+              borderRadius: "16px", padding: "1.2rem 1.5rem",
+              animation: `floatUp 0.4s ease-out ${i * 0.06}s forwards`,
+              opacity: 0,
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
+                <span style={{ fontSize: "1.2rem" }}>💎</span>
+                <span style={{ fontFamily: "'Playfair Display', serif", color: "#fcd34d", fontWeight: 700, fontSize: "0.95rem" }}>{w.name}</span>
+              </div>
+              <p style={{ fontFamily: "'Lora', serif", color: "#f0e6ff", fontSize: "0.9rem", lineHeight: 1.7, margin: 0 }}>{w.message}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 const LETTERS = {
   fromSister: {
     title: "A Letter From Chubs 💛",
@@ -434,8 +563,8 @@ function MusicPlayer() {
   );
 }
 
-const PAGES = ["home", "letter1", "letter2", "memories", "music", "secret"];
-const PAGE_LABELS = ["🏠", "💌 Letter", "🌙 For You", "💛 You", "🎵 Music", "🔮 Secret"];
+const PAGES = ["home", "letter1", "letter2", "memories", "music", "wishes", "secret"];
+const PAGE_LABELS = ["🏠", "💌 Letter", "🌙 For You", "💛 You", "🎵 Music", "💌 Wishes", "🔮 Secret"];
 
 export default function App() {
   const [entered, setEntered] = useState(false);
@@ -547,6 +676,7 @@ export default function App() {
                     { page: "letter2", label: "A Love Letter", emoji: "🌙", color: "#c084fc" },
                     { page: "memories", label: "Everything You Are", emoji: "💛", color: "#67e8f9" },
                     { page: "music", label: "Your Vibe", emoji: "🎵", color: "#fcd34d" },
+                    { page: "wishes", label: "Birthday Wishes", emoji: "💌", color: "#f9a8d4" },
                   ].map(item => (
                     <button key={item.page} onClick={() => setPage(item.page)} style={{
                       background: "rgba(255,255,255,0.05)",
@@ -590,6 +720,7 @@ export default function App() {
             {page === "letter2" && <LetterPage letter={LETTERS.loveLetterToSelf} />}
             {page === "memories" && <MemoriesPage />}
             {page === "music" && <MusicPlayer />}
+            {page === "wishes" && <WishingWall />}
             {page === "secret" && <HiddenPage />}
           </div>
 
